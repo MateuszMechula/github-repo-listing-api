@@ -1,14 +1,4 @@
 package com.example.github.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-public class Commit {
-    private String sha;
+public record Commit(String sha) {
 }

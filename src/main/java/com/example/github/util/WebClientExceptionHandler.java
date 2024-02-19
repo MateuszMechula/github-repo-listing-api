@@ -1,7 +1,7 @@
 package com.example.github.util;
 
+import com.example.github.util.exception.ClientErrorException;
 import com.example.github.util.exception.InternalServerException;
-import com.example.github.util.exception.UsernameNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Slf4j
 @ControllerAdvice
 public class WebClientExceptionHandler {
-    @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<ApiError> handleUsernameNotFound(UsernameNotFoundException ex) {
+    @ExceptionHandler(ClientErrorException.class)
+    public ResponseEntity<HttpException> handleUsernameNotFound(ClientErrorException ex) {
         log.error("UsernameNotFoundException occurred: {}", ex.getMessage());
-        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND.value(), ex.getMessage());
-        return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
+        HttpException httpException = new HttpException(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return new ResponseEntity<>(httpException, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(InternalServerException.class)
-    public ResponseEntity<ApiError> handleInternalServer(InternalServerException ex) {
+    public ResponseEntity<HttpException> handleInternalServer(InternalServerException ex) {
         log.error("InternalServerException occurred: {}", ex.getMessage());
-        ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
-        return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+        HttpException httpException = new HttpException(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
+        return new ResponseEntity<>(httpException, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

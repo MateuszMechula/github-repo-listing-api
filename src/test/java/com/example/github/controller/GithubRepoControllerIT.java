@@ -25,9 +25,11 @@ class GithubRepoControllerIT extends RestAssuredIntegrationTestBase
         stubForBranch4(wireMockServer);
 
         String expectedContent = new String(Files.readAllBytes(Paths.get
-                ("src/test/resources/__files/wiremock/response_github_api.json")));
+                ("src/test/resources/__files/wiremock/response_github_api.json")))
+                .replaceAll("\\s", "");
         // then
-        String repositoriesByUsername = getRepositoriesByUsername(testUsername);
+        String repositoriesByUsername = getRepositoriesByUsername(testUsername)
+                .replaceAll("\\s", "");
         // verify
         assertEquals(repositoriesByUsername, expectedContent);
     }

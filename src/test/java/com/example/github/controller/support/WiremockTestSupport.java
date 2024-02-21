@@ -2,8 +2,6 @@ package com.example.github.controller.support;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 
-import java.util.List;
-
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 public interface WiremockTestSupport {
@@ -16,15 +14,35 @@ public interface WiremockTestSupport {
                                 .withBodyFile("wiremock/response_owner_repos.json")));
     }
 
-    default void stubForBranches(final WireMockServer wireMockServer) {
-        List<String> repositoryNames = List.of("cottage-connect", "foodflow", "kalkulatorKredytuHipotecznego",
-                "MateuszMechula");
-        for (String repo : repositoryNames) {
-            wireMockServer.stubFor(
-                    get(urlPathEqualTo(String.format("/repos/MateuszMechula/%s/branches", repo)))
-                            .willReturn(aResponse()
-                                    .withHeader("Content-Type", "application/json")
-                                    .withBodyFile("wiremock/response_branches.json")));
-        }
+    default void stubForBranch1(final WireMockServer wireMockServer) {
+        wireMockServer.stubFor(
+                get(urlPathEqualTo("/repos/MateuszMechula/cottage-connect/branches"))
+                        .willReturn(aResponse()
+                                .withHeader("Content-Type", "application/json")
+                                .withBodyFile("wiremock/response_cottage_connect_branch.json")));
+    }
+
+    default void stubForBranch2(final WireMockServer wireMockServer) {
+        wireMockServer.stubFor(
+                get(urlPathEqualTo("/repos/MateuszMechula/foodflow/branches"))
+                        .willReturn(aResponse()
+                                .withHeader("Content-Type", "application/json")
+                                .withBodyFile("wiremock/response_foodflow_branch.json")));
+    }
+
+    default void stubForBranch3(final WireMockServer wireMockServer) {
+        wireMockServer.stubFor(
+                get(urlPathEqualTo("/repos/MateuszMechula/kalkulatorKredytuHipotecznego/branches"))
+                        .willReturn(aResponse()
+                                .withHeader("Content-Type", "application/json")
+                                .withBodyFile("wiremock/response_kalkulatorKredytuHipotecznego_branch.json")));
+    }
+
+    default void stubForBranch4(final WireMockServer wireMockServer) {
+        wireMockServer.stubFor(
+                get(urlPathEqualTo("/repos/MateuszMechula/MateuszMechula/branches"))
+                        .willReturn(aResponse()
+                                .withHeader("Content-Type", "application/json")
+                                .withBodyFile("wiremock/response_MateuszMechula_branch.json")));
     }
 }

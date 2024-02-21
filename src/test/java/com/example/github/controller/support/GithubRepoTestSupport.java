@@ -11,7 +11,10 @@ public interface GithubRepoTestSupport {
 
     default String getRepositoriesByUsername(String username) {
         return requestSpecification()
+                .given()
+                .contentType("application/json")
                 .pathParam("username", username)
+                .when()
                 .get(GET_REPOSITORIES_BY_USERNAME)
                 .then()
                 .statusCode(HttpStatus.OK.value())

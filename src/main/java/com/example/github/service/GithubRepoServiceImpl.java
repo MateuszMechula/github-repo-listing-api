@@ -32,7 +32,10 @@ public class GithubRepoServiceImpl implements IGithubRepoService {
     }
 
     private List<Branch> getBranches(String branchesUrl) {
-        String finalUrl = branchesUrl.replace("{/branch}", "");
+        String finalUrl = branchesUrl
+                .replace("https://api.github.com/", githubApiUrl)
+                .replace("{/branch}", "");
+
         log.info("Final URL for branches request: {}", finalUrl);
         return httpService.get(finalUrl, new ParameterizedTypeReference<>() {
         });
